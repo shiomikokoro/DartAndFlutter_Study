@@ -3,52 +3,37 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MyWidget());
 }
-class MyWidget extends StatefulWidget {
+
+class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
 
   @override
-  State<MyWidget> createState() {
-    print("createState exccute");
-    return _MyWidgetState();
-  }
-}
-
-class _MyWidgetState extends State<MyWidget> {
-  //一般在这个阶段获取数据
-  @override
-  void initState() {
-    print("initState exccute");
-    super.initState();
-  }
-  //initState()之后立刻执行，当所依赖的 InheritedWidget 全局状态更新时调用，可能多次
-  @override
-  void didChangeDependencies() {
-    print("didChangeDependencies exccute");
-    super.didChangeDependencies();
-  }
-  //初始化、更新后多次调用
-  @override
   Widget build(BuildContext context) {
-    print("build exccute");
-    return const Placeholder();
-  }
-  //传入新配置时调用，用于比对旧配置
-  @override
-  void didUpdateWidget(covariant MyWidget oldWidget) {
-    print("didUpdateWidget exccute");
-    super.didUpdateWidget(oldWidget);
-  }
-  //当State对象从树中暂时移除时调用
-  @override
-  void deactivate() {
-    print("deactivate exccute");
-    super.deactivate();
-  }
-  //State对象永久移除时调用，释放资源，仅执行一次。
-  @override
-  void dispose() {
-    print("dispose exccute");
-    super.dispose();
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Center示例"),
+        ),
+        body: Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(50)
+          ),
+          //padding 内边距组件
+          //为子组件添加内边距，可以单独设置子组件的内边距
+          ////padding 设置内边距的大小和方向，同上是EdgeInsets类设置
+          child: Padding(
+            // padding: EdgeInsets.only(left: 50,top: 50),//针对性设置
+            padding: EdgeInsets.symmetric(horizontal: 50,vertical: 20),//对边设置
+            // padding: EdgeInsetsGeometry.fromLTRB(left, top, right, bottom),//类css全变单独设置
+            child: Container(
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
-
