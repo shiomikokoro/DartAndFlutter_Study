@@ -17,7 +17,7 @@ class MyWidget extends StatelessWidget {
         ////widthFactor   Align的宽度，是子组件宽度*该因子，常在动态布局中被使用
         ////heightFactor  Align的高度，是子组件高度*该因子，常在动态布局中被使用
         appBar: AppBar(
-          title: Text("Center示例"),
+          title: Text("Align示例"),
         ),
         body: Container(
           color: Colors.blue,
