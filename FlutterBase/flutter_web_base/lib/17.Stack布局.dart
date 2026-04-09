@@ -7,10 +7,6 @@ void main() {
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
 
-  List<Widget> getList(){
-    return List.generate(10,(index)=>Container(height: 100,width:100,color: Colors.blue));
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

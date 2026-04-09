@@ -14,6 +14,7 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
   ScrollController _scrollController = ScrollController();
 
+  //示图
   List<Widget> getList(){
     return List.generate(50,(index)=>Container(
       margin: EdgeInsets.only(left: 10,right: 10),
@@ -26,6 +27,7 @@ class _MyWidgetState extends State<MyWidget> {
     ));
   }
 
+  //按钮
   Positioned getButton(String buttonText,{VoidCallback? onPressed,double? top,double? bottom,double? right,double? left}){
     return Positioned(
       right:right, top: top, left: left, bottom: bottom,
@@ -53,6 +55,12 @@ class _MyWidgetState extends State<MyWidget> {
         appBar: AppBar(title: Text("SingleChildScrollView示例")),
         body: Stack(
           children: [
+            //SingleChildScrollView 单子组件滚动布局
+            //只能有一个子组件，但可以包裹Column或row组件中嵌套多个子组件
+            //可以设置scrollDirection属性控制滚动方向，默认时垂直方向(Axis.vertical)，也可设置为水平方向(Axis.horizontal)
+            //是一次性加载全部子组件，所以仅适用于少量子组件，大量的建议使用ListView
+            //可以通过调用controller.animateTo/jumpTo()来控制滚动
+            ////可写入具体数值，或使用属性controller.position.maxScrollExtent等
             SingleChildScrollView(
                 controller: _scrollController,
                 child: Column(
