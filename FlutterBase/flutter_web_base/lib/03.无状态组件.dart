@@ -4,6 +4,8 @@ void main() {
   runApp(MainPage());
 }
 class MainPage extends StatelessWidget {
+  const MainPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,7 +22,7 @@ class MainPage extends StatelessWidget {
           ),
         ),
         //footer
-        bottomNavigationBar: Container(
+        bottomNavigationBar: SizedBox(
           height: 80,
           child: Center(
             child: Text("footer/bottomNavigationBar"),
