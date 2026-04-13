@@ -1,15 +1,11 @@
 import 'package:dio/dio.dart';
 
-void main(List<String> args) {
-
-}
-
 class DioUtils{
   final Dio _dio = Dio();
   DioUtils(){
     //做些基础操作
     //配置基础地址和超时时间
-    _dio.options..baseUrl = "https://geek.itheima.net/v1_0/channels"
+    _dio.options..baseUrl = "https://geek.itheima.net/v1_0/"
     ..connectTimeout = Duration(seconds: 10)//连接超时
     ..sendTimeout = Duration(seconds: 10)//发送超时
     ..receiveTimeout = Duration(seconds: 10);//接收超时
@@ -40,7 +36,7 @@ class DioUtils{
       },
     ));
   }
-  get(String url,{Map<String,dynamic>? params}){
+  Future<Response<dynamic>> get(String url,{Map<String,dynamic>? params}){
     return _dio.get(url,queryParameters: params);
   }
 }
