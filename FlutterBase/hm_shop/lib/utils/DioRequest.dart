@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hm_shop/constants/index.dart';
+import 'package:hm_shop/stores/TokenManager.dart';
 
 class DioRequest {
   final  _dio = Dio();
@@ -15,6 +16,10 @@ class DioRequest {
       onRequest: (request, handler) {
         if(request.data==null){
           request.sendTimeout = null;
+        }
+        //方便后端进行判断，本次教学演示，记得后续需加密且最好使用Add方法修改。
+        if(tokenManager.getToken().isNotEmpty){
+          request.headers = {"Authorization": "Bearer ${tokenManager.getToken()}"};
         }
         handler.next(request);
       },

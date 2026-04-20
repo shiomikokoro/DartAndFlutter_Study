@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hm_shop/api/User.dart';
+import 'package:hm_shop/stores/TokenManager.dart';
 import 'package:hm_shop/stores/UserController.dart';
+import 'package:hm_shop/utils/LoadingDialog.dart';
 import 'package:hm_shop/utils/Toastutils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -185,14 +187,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
   void _login() async{
+    LoadingDialog.show(context,message: "登录中...");
     try{
       final res = await loginAPI({"account":_phoneController.text,"password":_codeController.text});
-      print(res);
       _userCntroller.updateUser(res);
+      //可以在F12 Application Local Storage中查看token是否存在
+      tokenManager.setToken(res.token);
       Toastutils.showToast("登录成功", context);
       Navigator.pop(context);
+      // setState(() {}); //此处状态更新无效，需要在My页面中监听用户状态变化
     }catch(e){
       Toastutils.showToast((e as DioException).message, context);
+    }finally{
+      LoadingDialog.hide(context);
     }
   }
 }

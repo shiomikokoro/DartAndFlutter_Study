@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:hm_shop/api/My.dart';
 import 'package:hm_shop/components/Home/HmMoreList.dart';
 import 'package:hm_shop/components/My/HmGuess.dart';
+import 'package:hm_shop/stores/TokenManager.dart';
 import 'package:hm_shop/stores/UserController.dart';
 import 'package:hm_shop/viewmodels/Home.dart';
+import 'package:hm_shop/viewmodels/User.dart' show User;
 
 class MyView extends StatefulWidget {
   const MyView({super.key});
@@ -15,32 +17,38 @@ class MyView extends StatefulWidget {
 
 class _MyViewState extends State<MyView> {
 
-  final UserCntroller _userCntroller = Get.put(UserCntroller());
+  final UserCntroller _userCntroller = Get.find();
 
   Widget _getLogout() {
-    return GestureDetector(
+    return _userCntroller.user.value.avatar.isNotEmpty ? GestureDetector(
       onTap: () {
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text("确认退出登录吗？"),
+              title: const Text("提示"),
               content: const Text("确认退出登录吗？"),
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
+                    Navigator.pop(context);
                   },
                   child: const Text("取消"),
                 ),
-                TextButton(onPressed: () {}, child: const Text("确认")),
+                TextButton(onPressed: () async{
+                  await tokenManager.removeToken();
+                  _userCntroller.updateUser(User.fromJSON({}));//清除Getx数据
+                  Navigator.of(context).pop();
+                  setState(() {});
+                }, child: const Text("确认")),
               ],
             );
           },
         );
       },
-      child: const Text("退出"),
-    );
+      child: const Text("退出",textAlign: TextAlign.right,),
+    ):Text("");
   }
 
   Widget _buildHeader() {
@@ -87,6 +95,7 @@ class _MyViewState extends State<MyView> {
               ],
             ),
           ),
+          Expanded(child: _getLogout()),
         ],
       ),
     );

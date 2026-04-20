@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hm_shop/api/User.dart';
 import 'package:hm_shop/pages/Cart/index.dart';
 import 'package:hm_shop/pages/Category/index.dart';
 import 'package:hm_shop/pages/Home/index.dart';
 import 'package:hm_shop/pages/My/index.dart';
+import 'package:hm_shop/stores/TokenManager.dart';
+import 'package:hm_shop/stores/UserController.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -12,6 +16,19 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final UserCntroller _userController = Get.put(UserCntroller());
+  @override
+  void initState() {
+    super.initState();
+    _initUser();
+  }
+  void _initUser() async{
+    await tokenManager.init();//初始化token
+    if(tokenManager.getToken().isNotEmpty){
+      _userController.updateUser(await getUserAPI());
+    }
+  }
+
   //一般导航是固定的
   final List<Map<String,String>> _tabList = [
     {"text":"首页","icon":"lib/assets/ic_public_home_normal.png","active_icon":"lib/assets/ic_public_home_active.png"},
